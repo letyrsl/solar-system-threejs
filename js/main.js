@@ -1,12 +1,33 @@
+const SCREEN_WIDTH = window.innerWidth;
+const SCREEN_HEIGHT = window.innerHeight;
+
 // Standard global variables
-var scene, camera, renderer, controls, stats;
+let scene, camera, renderer, controls, stats;
 const container = document.getElementById('ThreeJS');
+
+// Defining celestial bodies properties
+const celestialBodiesProperties = [
+    { radius: 8, positionX: 0, textureFile: 'sun.jpeg' },
+    { radius: 2, positionX: 16, textureFile: 'mercury.png' },
+    { radius: 3, positionX: 32, textureFile: 'venus.jpeg' },
+    { radius: 4, positionX: 48, textureFile: 'earth.jpeg' },
+    { radius: 3, positionX: 64, textureFile: 'mars.jpeg' },
+    { radius: 8, positionX: 80, textureFile: 'jupiter.jpg' },
+    { radius: 5, positionX: 96, textureFile: 'saturn.jpg' },
+    { radius: 4, positionX: 112, textureFile: 'uranus.jpg' },
+    { radius: 4, positionX: 128, textureFile: 'neptune.jpg' },
+];
 
 // Init scene
 init();
 
 // Animation loop
 animate();
+
+// Creating sun and planets
+celestialBodiesProperties.forEach(celestialBody => {
+    createCelestialBody(celestialBody);
+});
 
 ///////////////
 // FUNCTIONS //
@@ -23,25 +44,15 @@ function init()
     setControls();
     setStats();
     setLight();
-
-    // Create objects
-    createSphere();
-
-    // set the sky color
     setSky();
 }
 
 function setCamera()
 {
-    // set the view size in pixels (custom or according to window size)
-    // var SCREEN_WIDTH = 400, SCREEN_HEIGHT = 300;
-    const SCREEN_WIDTH = window.innerWidth;
-    const SCREEN_HEIGHT = window.innerHeight;
-
     // camera attributes
-    const VIEW_ANGLE = 45;
+    const VIEW_ANGLE = 36;
     const ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
-    const NEAR = 0.1;
+    const NEAR = 1;
     const FAR = 20000;
 
     // set up camera
@@ -52,23 +63,15 @@ function setCamera()
 
     // the camera defaults to position (0,0,0)
     // 	so pull it back (z = 400) and up (y = 100) and set the angle towards the scene origin
-    camera.position.set(0,150,400);
+    camera.position.set(0, 0, 128);
     camera.lookAt(scene.position);
 }
 
 function setRenderer()
 {
-    // set the view size in pixels (custom or according to window size)
-    // var SCREEN_WIDTH = 400, SCREEN_HEIGHT = 300;
-    const SCREEN_WIDTH = window.innerWidth;
-    const SCREEN_HEIGHT = window.innerHeight;
-
-    // create and start the renderer; choose antialias setting.
-    if (Detector.webgl) {
-        renderer = new THREE.WebGLRenderer( {antialias:true} );
-    } else {
-        renderer = new THREE.CanvasRenderer();
-    }
+    renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
 
     renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -77,7 +80,6 @@ function setRenderer()
 
     // automatically resize renderer
     THREEx.WindowResize(renderer, camera);
-
 }
 
 function setControls()
@@ -95,40 +97,38 @@ function setStats()
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.bottom = '0px';
     stats.domElement.style.zIndex = 100;
-    container.appendChild( stats.domElement );
+    container.appendChild(stats.domElement);
 }
 
 function setLight()
 {
     // create a light
-    var light = new THREE.PointLight(0xffffff);
+    let light = new THREE.PointLight(0xffffff);
     light.position.set(100,100,100);
     scene.add(light);
 
-        var ambientLight = new THREE.AmbientLight(0xfff);
-        scene.add(ambientLight);
+    let ambientLight = new THREE.AmbientLight(0xfff);
+    scene.add(ambientLight);
 }
 
 function setSky()
 {
     // make sure the camera's "far" value is large enough so that it will render the skyBox!
-    var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+    let skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
     // BackSide: render faces from inside of the cube, instead of from outside (default).
-    var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x000, side: THREE.BackSide } );
-    var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+    let skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x000, side: THREE.BackSide } );
+    let skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
     scene.add(skyBox);
 }
 
-function createSphere()
+function createCelestialBody({ radius, positionX, textureFile })
 {
-    // Sphere parameters: radius, segments along width, segments along height
-    var sphereGeometry = new THREE.SphereGeometry( 50, 32, 16 );
-    // use a "lambert" material rather than "basic" for realistic lighting.
-    //   (don't forget to add (at least one) light!)
-    var sphereMaterial = new THREE.MeshLambertMaterial( {color: 0x8888ff} );
-    var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.set(100, 50, -50);
-    scene.add(sphere);
+    const geometry = new THREE.SphereGeometry(radius, 50, 50);
+    const texture = THREE.ImageUtils.loadTexture(`public/textures/${textureFile}`);
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.x = positionX;
+    scene.add(mesh);
 }
 
 function animate()
