@@ -6,4 +6,4 @@ This GitHub project utilizes Three.js to create a straightforward and visually e
 - [ ] Add saturn rings
 - [X] Add space background
 - [ ] Add movement
-- [ ] Add lighting
+- [X] Add lighting

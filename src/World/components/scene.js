@@ -1,4 +1,9 @@
-import { TextureLoader, Scene, RepeatWrapping } from 'https://cdn.skypack.dev/three@0.132.2';
+import {
+  TextureLoader,
+  Scene,
+  RepeatWrapping,
+  AmbientLight
+} from 'https://cdn.skypack.dev/three@0.132.2';
 
 function createScene() {
   const scene = new Scene();
@@ -9,6 +14,9 @@ function createScene() {
   texture.repeat.set(3,3);
 
   scene.background = texture;
+
+  const ambient = new AmbientLight(0x303030);
+  scene.add(ambient);
 
   return scene;
 }
