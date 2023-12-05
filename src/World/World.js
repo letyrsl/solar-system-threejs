@@ -8,10 +8,7 @@ import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
 import { Loop } from './systems/Loop.js';
 
-let camera;
-let renderer;
-let scene;
-let loop;
+let camera, renderer, scene, loop;
 
 class World {
   constructor(container) {
@@ -36,6 +33,7 @@ class World {
     const planets = createPlanets();
 
     planets.forEach(planet => {
+      loop.updatables.push(planet);
       scene.add(planet);
     });
 

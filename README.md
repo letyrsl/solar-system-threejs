@@ -5,5 +5,5 @@ This GitHub project utilizes Three.js to create a straightforward and visually e
 - [x] Add planets
 - [ ] Add saturn rings
 - [X] Add space background
-- [ ] Add movement
+- [X] Add movement
 - [X] Add lighting
