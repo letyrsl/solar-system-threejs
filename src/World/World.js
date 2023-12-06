@@ -1,5 +1,5 @@
 import { createCamera } from './components/camera.js';
-import { createSun, createPlanets } from './components/celestial-bodies.js';
+import { createCelestialBodies } from './components/celestial-bodies.js';
 import { createAmbientLight, createPointlight } from './components/lights.js';
 import { createScene } from './components/scene.js';
 
@@ -27,14 +27,11 @@ class World {
     const pointlight = createPointlight();
     scene.add(pointlight)
 
-    const sun = createSun();
-    scene.add(sun);
+    const celestialBodies = createCelestialBodies();
 
-    const planets = createPlanets();
-
-    planets.forEach(planet => {
-      loop.updatables.push(planet);
-      scene.add(planet);
+    celestialBodies.forEach(celestialBody => {
+      loop.updatables.push(celestialBody);
+      scene.add(celestialBody);
     });
 
     const resizer = new Resizer(container, camera, renderer);
