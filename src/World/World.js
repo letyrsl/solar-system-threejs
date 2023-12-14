@@ -1,6 +1,8 @@
 import { GUI } from 'https://cdn.skypack.dev/dat.gui';
+
 import { createCamera } from './components/camera.js';
 import { createCelestialBodies, animatePlanets } from './components/celestial-bodies.js';
+import { createRocket } from './components/rocket.js';
 import { createAmbientLight, createPointlight } from './components/lights.js';
 import { createScene } from './components/scene.js';
 
@@ -26,7 +28,7 @@ class World {
     scene.add(ambientLight);
 
     const pointlight = createPointlight();
-    scene.add(pointlight)
+    scene.add(pointlight);
 
     const celestialBodies = createCelestialBodies();
 
@@ -34,6 +36,8 @@ class World {
       loop.updatables.push(celestialBody);
       scene.add(celestialBody);
     });
+
+    createRocket(scene);
 
     const resizer = new Resizer(container, camera, renderer);
 

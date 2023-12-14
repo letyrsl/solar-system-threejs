@@ -6,7 +6,7 @@ This scene includes all the planets within our solar system orbiting the sun.
 Each planet undergoes a graceful orbital translation around the sun while also spinning on its axis.
 The sun radiates light from its core through a Pointlight, casting shadows on the planets.
 
-Notably, the Earth hosts a satellite in its orbit.
+Additionally, an interactive feature includes a rocket controlled by keyboard inputs, allowing users to navigate through this cosmic display.
 
 Moreover, a user-friendly GUI allows you to control the speed of the orbital animation.
 Enjoy exploring this celestial dance!
@@ -19,4 +19,4 @@ Enjoy exploring this celestial dance!
 - [X] Add movement
 - [X] Add lighting
 - [X] Add GUI to control speed's animation
-- [ ] Add earth satellite
+- [X] Add rocket
