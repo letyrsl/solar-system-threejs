@@ -10,6 +10,26 @@ function createCamera() {
 
   camera.position.set(0, 0, 500);
 
+  document.addEventListener('keydown', (e) => {
+    const speed = 10;
+
+    if (e.key == 'w' || e.key == 'ArrowUp') { // Frente
+      camera.position.z -= speed;
+    }
+
+    if (e.key == 's' || e.key == 'ArrowDown') { // Atrás
+      camera.position.z += speed;
+    }
+
+    if (e.key == 'a' || e.key == 'ArrowLeft') { // Esquerda
+      camera.position.x -= speed;
+    }
+
+    if (e.key == 'd' || e.key == 'ArrowRight') { // Direita
+      camera.position.x += speed;
+    }
+  }, false);
+
   return camera;
 }
 

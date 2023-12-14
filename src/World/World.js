@@ -47,7 +47,7 @@ class World {
       });
     });
 
-    planetFolder.open()
+    planetFolder.open();
   }
 
   render() {
