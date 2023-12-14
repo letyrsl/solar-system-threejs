@@ -39,6 +39,7 @@ function createMesh({ name, size, textureFile, radius }) {
   const material = createMaterial(textureFile, name);
   const celestialBody = new Mesh(geometry, material);
 
+  celestialBody.name = name;
   celestialBody.position.x = radius;
 
   return celestialBody;
@@ -50,16 +51,7 @@ function createCelestialBodies() {
   planetsProperties.forEach(properties => {
     const planetMesh = createMesh(properties);
 
-    // animation
-    planetMesh.tick = () => {
-      // rotation animation
-      planetMesh.rotation.y += EARTH_YEAR;
-
-      // translation animation
-      const angle = Date.now() * properties.speed;
-      planetMesh.position.x = properties.radius * Math.cos(angle);
-      planetMesh.position.z = properties.radius * Math.sin(angle);
-    };
+    animatePlanets(planetMesh, 1);
 
     celestialBody.push(planetMesh);
   })
@@ -67,4 +59,19 @@ function createCelestialBodies() {
   return celestialBody;
 }
 
-export { createCelestialBodies };
+function animatePlanets(planetMesh, timeScale) {
+  const properties = planetsProperties.filter(planet => planet.name == planetMesh.name)[0];
+
+  planetMesh.tick = () => {
+    // rotation animation
+    planetMesh.rotation.y += EARTH_YEAR;
+
+    // translation animation
+    const angle = Date.now() * (properties.speed * timeScale);
+    planetMesh.position.x = properties.radius * Math.cos(angle);
+    planetMesh.position.z = properties.radius * Math.sin(angle);
+  };
+
+}
+
+export { createCelestialBodies, animatePlanets };

@@ -1,5 +1,6 @@
+import { GUI } from 'https://cdn.skypack.dev/dat.gui';
 import { createCamera } from './components/camera.js';
-import { createCelestialBodies } from './components/celestial-bodies.js';
+import { createCelestialBodies, animatePlanets } from './components/celestial-bodies.js';
 import { createAmbientLight, createPointlight } from './components/lights.js';
 import { createScene } from './components/scene.js';
 
@@ -35,6 +36,18 @@ class World {
     });
 
     const resizer = new Resizer(container, camera, renderer);
+
+    const gui = new GUI();
+    const planetFolder = gui.addFolder('Planetas');
+    const translation = { speed: 1 };
+
+    planetFolder.add(translation, 'speed', 0, 1).onChange((speed) => {
+      celestialBodies.forEach(celestialBody => {
+        animatePlanets(celestialBody, speed);
+      });
+    });
+
+    planetFolder.open()
   }
 
   render() {
