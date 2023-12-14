@@ -11,6 +11,8 @@ Notably, the Earth hosts a satellite in its orbit.
 Moreover, a user-friendly GUI allows you to control the speed of the orbital animation.
 Enjoy exploring this celestial dance!
 
+![Peek 13-12-2023 23-18](https://github.com/letyrsl/solar-system-threejs/assets/62625777/f4a81412-f256-433c-ab99-6cfa00926759)
+
 ## TO DO
 - [x] Add planets
 - [X] Add space background
